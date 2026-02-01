@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Modification Masterclass | ECU-SD-04-06 | 80+ Slides | Coach Academy</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; background: #e8e8e8; color: #000; }
+        .presentation { max-width: 960px; margin: 0 auto; padding: 20px; }
+
+        /* Slide template - matches image: purple border, background #efead8 */
+        .slide {
+            background: #efead8;
+            min-height: 560px;
+            border: 3px solid #a366ff;
+            border-radius: 4px;
+            margin: 24px 0;
+            padding: 0;
+            position: relative;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+
+        /* Header: COACH ACADEMY left, line, nav right */
+        .slide-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px 14px;
+            border-bottom: 1px solid #000;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            border: 2px solid #000;
+            border-radius: 999px;
+            background: #efead8;
+        }
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #fff;
+        }
+        .logo-text { font-weight: bold; font-size: 14px; letter-spacing: 0.02em; text-transform: uppercase; color: #000; }
+        .header-line { flex: 1; height: 2px; background: #000; min-width: 20px; }
+        .nav-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            border: 2px solid #000;
+            border-radius: 999px;
+            background: #efead8;
+        }
+        .nav-badge .arrow { cursor: pointer; font-size: 18px; font-weight: bold; color: #000; user-select: none; }
+        .nav-badge .arrow:hover { opacity: 0.7; }
+        .nav-badge .page-num { font-size: 16px; font-weight: bold; color: #000; min-width: 28px; text-align: center; }
+
+        /* Main content area - centered */
+        .slide-body {
+            flex: 1;
+            padding: 32px 48px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .slide-body.centered { align-items: center; text-align: center; }
+        .slide-title { font-size: 28px; font-weight: bold; color: #000; margin: 0 0 20px; }
+        .slide-content { font-size: 17px; line-height: 1.6; color: #000; }
+        .slide-content ul { margin: 12px 0; padding-left: 24px; }
+        .slide-content li { margin: 8px 0; }
+        .slide-content p { margin: 10px 0; }
+        .emoji-lg { font-size: 64px; margin-bottom: 12px; }
+        .time-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; font-size: 16px; color: #000; }
+        .time-row .emoji { font-size: 24px; }
+
+        /* Content boxes */
+        .fun-box { background: #e8e4dc; border-left: 4px solid #a366ff; padding: 14px 18px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .highlight { color: #6b2d9e; font-weight: bold; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 15px; }
+        .comparison-table th, .comparison-table td { padding: 10px 12px; border: 1px solid #a366ff; text-align: left; }
+        .comparison-table th { background: #a366ff; color: #fff; }
+        .comparison-table tr:nth-child(even) { background: #e8e4dc; }
+        .agenda-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .agenda-table th, .agenda-table td { padding: 8px 12px; border: 1px solid #000; text-align: left; }
+        .agenda-table th { background: #333; color: #fff; }
+        .block-label { font-weight: bold; margin-top: 20px; font-size: 16px; color: #6b2d9e; }
+        .subtitle { font-size: 18px; color: #333; margin-bottom: 24px; }
+        code { background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 14px; }
+
+        /* Footer at end of every slide */
+        .slide-footer {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 12px 24px;
+            font-size: 13px;
+            color: #333;
+            border-top: 1px solid #ccc;
+        }
+        .slide-footer a { color: #6b2d9e; text-decoration: none; }
+
+        @media print {
+            body { background: #fff; }
+            .presentation { padding: 0; }
+            .slide { display: flex !important; page-break-after: always; border: 2px solid #a366ff; }
+            .slide.active { display: flex !important; }
+            .nav-badge .arrow { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation">
+
+<p style="background:#e8e4dc; padding:15px; border-radius:10px; margin-bottom:20px; border-left:4px solid #a366ff;">
+<strong>📄 To convert to Word (.docx):</strong> Open this file in Microsoft Word (Right-click → Open with → Microsoft Word), then <strong>File → Save As → Word Document (.docx)</strong>.
+</p>
+<h1 style="text-align:center; color:#333; font-size:32px;">📘 Code Modification Masterclass</h1>
+<p style="text-align:center; color:#666; font-size:18px;">ECU-SD-04-06 | Modifying Pre-existing Code</p>
+<p style="text-align:center; color:#666; margin-bottom:24px;">80+ Slides | Full Book Coverage | USAID Workforce Egypt / IATS</p>
+
+<!-- MEGA AGENDA (from Book ECU-SD-04-06) -->
+<div style="background:#efead8; padding:28px; border-radius:12px; margin:20px 0; border:2px solid #a366ff;">
+    <h2 style="color:#6b2d9e; text-align:center;">📋 COMPLETE AGENDA & TIMETABLE</h2>
+    <div class="block-label">Introduction to the Competency</div>
+    <table class="agenda-table">
+        <tr><th>📍</th><th>Slides</th><th>Topic</th><th>⏱️</th></tr>
+        <tr><td>1</td><td>1–8</td><td>Welcome, Learning Outcomes, Agenda</td><td>15 min</td></tr>
+        <tr><td>2</td><td>9–18</td><td>Overview of Collaborative Software Development</td><td>30 min</td></tr>
+        <tr><td>3</td><td>19–28</td><td>Version Control Systems (Git)</td><td>35 min</td></tr>
+        <tr><td>4</td><td>29–38</td><td>Collaboration Platforms (GitHub, PRs, Issues)</td><td>35 min</td></tr>
+        <tr><td>5</td><td>39–42</td><td>Case Study: Linux & Creation of Git</td><td>15 min</td></tr>
+    </table>
+    <div class="block-label">Unit 1: Project Inspection and Preparation</div>
+    <table class="agenda-table">
+        <tr><th>📍</th><th>Slides</th><th>Topic</th><th>⏱️</th></tr>
+        <tr><td>6</td><td>43–52</td><td>Choosing Inspection Tools (Static Analysis & Linters)</td><td>30 min</td></tr>
+        <tr><td>7</td><td>53–58</td><td>Using Inspection Tools, Identifying Modification Points</td><td>25 min</td></tr>
+        <tr><td>8</td><td>59–62</td><td>Assessing Project Technologies, Comparing IDEs, AI Tools</td><td>20 min</td></tr>
+    </table>
+    <div class="block-label">Unit 2: Code Analysis and Understanding</div>
+    <table class="agenda-table">
+        <tr><th>📍</th><th>Slides</th><th>Topic</th><th>⏱️</th></tr>
+        <tr><td>9</td><td>63–70</td><td>Code Reading Techniques, Models & Diagrams, UML Tools</td><td>30 min</td></tr>
+        <tr><td>10</td><td>71–72</td><td>Case Study: Legacy Financial Application</td><td>10 min</td></tr>
+    </table>
+    <div class="block-label">Unit 3: Modifying Code and Documentation</div>
+    <table class="agenda-table">
+        <tr><th>📍</th><th>Slides</th><th>Topic</th><th>⏱️</th></tr>
+        <tr><td>11</td><td>73–80</td><td>Comments, Documentation, Implementing Modifications</td><td>35 min</td></tr>
+    </table>
+    <div class="block-label">Unit 4: Debugging and Testing Modifications</div>
+    <table class="agenda-table">
+        <tr><th>📍</th><th>Slides</th><th>Topic</th><th>⏱️</th></tr>
+        <tr><td>12</td><td>81–86</td><td>Debugging, Testing Modified Code, Managing Pull Requests</td><td>30 min</td></tr>
+        <tr><td>13</td><td>87–88</td><td>Summary & Q&A</td><td>15 min</td></tr>
+    </table>
+    <p style="text-align:center; margin-top:16px; font-size:16px;">📚 <strong>80+ Slides</strong> | Source: Book ECU-SD-04-06</p>
+</div>
+
+<!-- ==================== SLIDES START ==================== -->
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" data-slide="1">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">1</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body centered">
+        <div class="slide-title">Code Modification</div>
+        <p class="subtitle">ECU-SD-04-06 | Modifying Pre-existing Code</p>
+        <p class="slide-content">Grade Three • International Applied Technology Schools (IATS)<br>Software Development</p>
+        <p class="slide-content" style="margin-top:24px;">Source: USAID Workforce Egypt / IATS</p>
+    </div>
+</div>
+
+<!-- SLIDE 2: Welcome -->
+<div class="slide" data-slide="2">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">2</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Welcome</div>
+        <div class="slide-content">
+            <ul>
+                <li>This course covers <strong>modifying pre-existing code</strong> in a professional and collaborative way.</li>
+                <li>You will learn how to <strong>inspect</strong>, <strong>understand</strong>, <strong>modify</strong>, and <strong>test</strong> code safely.</li>
+                <li>Content is based on the competency <strong>ECU-SD-04-06</strong> from the IATS Software Development curriculum.</li>
+            </ul>
+            <div class="fun-box">Disclaimer: This publication is made possible by the support of the American People through USAID and does not necessarily reflect the views of USAID or the United States Government.</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 3: Learning Outcomes -->
+<div class="slide" data-slide="3">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">3</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Learning Outcomes</div>
+        <div class="slide-content">
+            <p>Upon completion, you will be able to:</p>
+            <p><strong>1. Specify the programming language and tools</strong><br>Determine inspection tools, select files/modules to modify, recognize the language, choose the right editor.</p>
+            <p><strong>2. Define the logical order of the code</strong><br>Read code by language type, document logical arrangement with flowcharts, write comments from flowcharts.</p>
+            <p><strong>3. Modify the code</strong><br>Determine type, place, and manner of modification; add/modify code; document changes; execute according to instructions.</p>
+            <p><strong>4. Test the code after modification</strong><br>Review test plan, test the modified code, address programming errors if found.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 4: Agenda -->
+<div class="slide" data-slide="4">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">4</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">📋 Complete Agenda</div>
+        <div class="slide-content">
+            <p><strong>Introduction:</strong> Collaborative development, Version control (Git), GitHub, PRs &amp; Issues, Case study (Linux &amp; Git)</p>
+            <p><strong>Unit 1:</strong> Inspection tools (static analysis &amp; linters), Using tools, Modification points, IDEs, AI tools</p>
+            <p><strong>Unit 2:</strong> Code reading, Models &amp; diagrams, UML tools, Case study (legacy app)</p>
+            <p><strong>Unit 3:</strong> Comments, Documentation, Implementing modifications, Practical &amp; collaborative exercises</p>
+            <p><strong>Unit 4:</strong> Debugging, Testing modified code, Managing pull requests</p>
+            <p><strong>Summary &amp; Q&amp;A</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 5: Collaboration -->
+<div class="slide" data-slide="5">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">5</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Overview of collaborative software development</div>
+        <div class="slide-content">
+            <p>Collaboration is a cornerstone of modern software development.</p>
+            <ul>
+                <li><strong>Shared knowledge</strong> — Mentorship and learning among team members.</li>
+                <li><strong>Improved code quality</strong> — Code reviews and pair programming reduce errors.</li>
+                <li><strong>Faster problem solving</strong> — Different perspectives lead to quicker solutions.</li>
+                <li><strong>Better project management</strong> — Tools like Jira and Trello keep everyone aligned.</li>
+            </ul>
+            <div class="fun-box">Contributing to shared codebases (e.g. open source) builds real-world experience and strengthens your portfolio.</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 6: Importance of collaboration (detail) -->
+<div class="slide" data-slide="6">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">6</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Importance of collaboration in software development</div>
+        <div class="slide-content">
+            <ul>
+                <li><strong>Shared knowledge</strong> — Junior and senior developers learn from each other.</li>
+                <li><strong>Improved code quality</strong> — Code reviews and pair programming catch bugs early (e.g. on GitHub).</li>
+                <li><strong>Faster problem solving</strong> — Different perspectives; one developer may spot what others missed.</li>
+                <li><strong>Enhanced creativity</strong> — Brainstorming leads to innovative solutions.</li>
+                <li><strong>Better project management</strong> — Jira, Trello for tasks and alignment.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: Benefits of contributing to shared codebases -->
+<div class="slide" data-slide="7">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">7</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Benefits of contributing to shared codebases</div>
+        <div class="slide-content">
+            <ul>
+                <li><strong>Real-world experience</strong> — e.g. contributing to Linux kernel or React.js.</li>
+                <li><strong>Learning from others</strong> — Different coding styles and best practices (e.g. Django).</li>
+                <li><strong>Networking</strong> — Build connections; employers notice active GitHub contributors.</li>
+                <li><strong>Improving skills</strong> — Continuous practice and feedback (e.g. TensorFlow).</li>
+                <li><strong>Building a portfolio</strong> — Apache, Mozilla Firefox contributions strengthen your resume.</li>
+                <li><strong>Giving back</strong> — Fix bugs, improve docs (e.g. WordPress, VLC).</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 8: Version control intro with examples -->
+<div class="slide" data-slide="8">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">8</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Version control systems — introduction with examples</div>
+        <div class="slide-content">
+            <p>VCS manage changes to source code over time. Example: <strong>Linux kernel</strong> uses Git; thousands of developers contribute simultaneously.</p>
+            <ul>
+                <li>Multiple developers collaborate without overwriting each other.</li>
+                <li>History of changes; conflict resolution.</li>
+                <li>Commands: <code>git init</code>, <code>git add</code>, <code>git commit</code>, <code>git log</code>.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 9: Tracking changes -->
+<div class="slide" data-slide="9">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">9</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Tracking changes</div>
+        <div class="slide-content">
+            <p>Each <strong>commit</strong> has a timestamp, author, and message. Use commit history to trace when a bug was introduced and fix it.</p>
+            <p>Commands: <code>git add .</code> → <code>git commit -m "message"</code> → <code>git log</code></p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 10: Collaboration and branching -->
+<div class="slide" data-slide="10">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">10</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Collaboration and branching</div>
+        <div class="slide-content">
+            <p>Branching creates isolated copies. Use <strong>main</strong> for stable releases and <strong>feature</strong> branches for new work.</p>
+            <p>Commands: <code>git branch feature-name</code>, <code>git checkout feature-name</code>, make changes, <code>git merge feature-name</code>.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 11: Merging and reverting -->
+<div class="slide" data-slide="11">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">11</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Merging and reverting changes</div>
+        <div class="slide-content">
+            <p><strong>Merging:</strong> When branches are complete, merge into main. Resolve conflicts with <code>git mergetool</code> or manual edit.</p>
+            <p><strong>Reverting:</strong> <code>git revert &lt;commit&gt;</code> creates a new commit that undoes a previous one. Use if a commit causes a crash.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 12: Distributed VCS and backup -->
+<div class="slide" data-slide="12">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">12</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Distributed version control and backup</div>
+        <div class="slide-content">
+            <p>In Git (DVCS), every developer has a <strong>full copy</strong> of the repository. Work offline, then <code>git push</code> when back online.</p>
+            <p>If the central server crashes, any clone can restore the project. <code>git clone &lt;url&gt;</code> gives a complete copy.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 13: Code reviews and pull requests (VCS) -->
+<div class="slide" data-slide="13">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">13</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Code reviews and pull requests</div>
+        <div class="slide-content">
+            <p>GitHub/GitLab let you submit changes for review. Open a PR; reviewers comment and approve; then merge.</p>
+            <p>Integration with IDEs (e.g. VS Code Git support) and issue trackers (Jira) streamlines the workflow.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 14: Overview of GitHub -->
+<div class="slide" data-slide="14">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">14</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Overview of GitHub and its features</div>
+        <div class="slide-content">
+            <p>GitHub is built around Git. Key features:</p>
+            <ul>
+                <li><strong>Repositories</strong> — Public or private; create via web or <code>git init</code> + <code>git remote add</code>.</li>
+                <li><strong>Branches and pull requests</strong> — Propose, review, and merge changes.</li>
+                <li><strong>Issues</strong> — Track bugs, enhancements; assign and label.</li>
+                <li><strong>Project boards</strong> — Kanban (To Do, In Progress, Done).</li>
+                <li><strong>GitHub Actions</strong> — Automate build, test, deploy on push/PR.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 15: Creating and managing repositories -->
+<div class="slide" data-slide="15">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">15</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Creating and managing repositories on GitHub</div>
+        <div class="slide-content">
+            <p><strong>Web:</strong> Sign in → New repository → Name, description, public/private, README, .gitignore, license.</p>
+            <p><strong>Command line:</strong> <code>git init</code>, <code>git add .</code>, <code>git commit -m "Initial"</code>, then on GitHub create repo (no README), <code>git remote add origin &lt;url&gt;</code>, <code>git push -u origin main</code>.</p>
+            <p>Use README and wiki for documentation; Settings for branch protection and collaborators.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 16: Pull requests and issues (GitHub) -->
+<div class="slide" data-slide="16">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">16</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Collaborating with pull requests and issues</div>
+        <div class="slide-content">
+            <p><strong>Creating a PR:</strong> Create branch → commit → push → Compare and pull request → fill title/description → request reviewers.</p>
+            <p><strong>Reviewing:</strong> Comment on lines, suggest changes, approve, then Merge pull request.</p>
+            <p><strong>Issues:</strong> New issue → describe, add labels, assign. Link PR with "Fixes #123" to auto-close.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 17: Case study — Linux and Git -->
+<div class="slide" data-slide="17">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">17</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Case study: Development of Linux and creation of Git</div>
+        <div class="slide-content">
+            <p><strong>Linus Torvalds</strong> (1991) created Linux; announced on comp.os.minix. Open-source collaboration grew the kernel.</p>
+            <p>BitKeeper was used for VCS; when its free license was revoked (2005), Torvalds created <strong>Git</strong> in weeks. Git is distributed, fast, with easy branching and merging. GitHub (2008) popularized Git further.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 18: Summary — Introduction to competency -->
+<div class="slide" data-slide="18">
+    <div class="slide-header">
+        <div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div>
+        <div class="header-line"></div>
+        <div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">18</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Summary — Introduction to the competency</div>
+        <div class="slide-content">
+            <p><strong>Key takeaways:</strong> Collaboration (shared knowledge, code quality, problem solving); Version control (Git: tracking, branching, merging, reverting); GitHub (repos, PRs, issues, Actions).</p>
+            <p>Glossary: Branch, Commit, Merge, Pull Request, Repository, VCS.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 19: Version control -->
+<div class="slide" data-slide="19">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">19</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Version control systems</div>
+        <div class="slide-content">
+            <p>Version control (e.g. <strong>Git</strong>) manages changes to source code over time.</p>
+            <ul>
+                <li><strong>Tracking changes</strong> — Every commit has a timestamp, author, and message.</li>
+                <li><strong>Branching</strong> — Work on features or fixes without affecting the main codebase.</li>
+                <li><strong>Merging</strong> — Combine branches; resolve conflicts when the same code is changed.</li>
+                <li><strong>Reverting</strong> — Roll back to a previous state if a change causes problems.</li>
+                <li><strong>Auditing</strong> — Clear record of who changed what and when.</li>
+            </ul>
+            <div class="fun-box">Git is distributed: each developer has a full copy of the repository and can work offline.</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 20: GitHub -->
+<div class="slide" data-slide="20">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">20</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Collaboration platforms: GitHub</div>
+        <div class="slide-content">
+            <ul>
+                <li><strong>Repositories</strong> — Public or private; create and manage projects.</li>
+                <li><strong>Branches & pull requests</strong> — Propose changes; team reviews before merge.</li>
+                <li><strong>Issues</strong> — Track bugs, enhancements, and tasks.</li>
+                <li><strong>Project boards</strong> — Kanban-style (To Do, In Progress, Done).</li>
+                <li><strong>GitHub Actions</strong> — Automate build, test, and deploy on push/PR.</li>
+            </ul>
+            <div class="fun-box">Pull requests are central: they enable code review, discussion, and safe integration of modifications.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Unit 1: Project Inspection and Preparation (slides 21-38) -->
+<div class="slide" data-slide="21"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">21</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Unit 1: Importance of code inspection</div><div class="slide-content"><p>Code inspection (code review) finds defects, improves quality, ensures standards. Benefits: <strong>early bug detection</strong>, <strong>improved code quality</strong>, <strong>consistency</strong>, <strong>security</strong>, <strong>reduced technical debt</strong>.</p></div></div></div>
+<div class="slide" data-slide="22"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">22</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Types of inspection tools: Static analysis &amp; linters</div><div class="slide-content"><p><strong>Static code analysis</strong> — Analyzes code without running it: errors, security (SQL injection, XSS), metrics (complexity, duplication). Examples: SonarQube, Coverity, Checkmarx, Fortify.</p><p><strong>Linters</strong> — Style, syntax, potential errors. Examples: ESLint (JS/TS), Pylint/Flake8 (Python), Checkstyle (Java), Rubocop (Ruby).</p></div></div></div>
+<div class="slide" data-slide="23"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">23</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Selecting tools by language</div><div class="slide-content"><p><strong>JS/TS:</strong> ESLint, SonarQube. <strong>Python:</strong> Pylint, Flake8, Bandit. <strong>Java:</strong> Checkstyle, PMD, SpotBugs, SonarQube. <strong>C/C++:</strong> Coverity, Cppcheck, Clang-Tidy. <strong>Ruby:</strong> Rubocop, Reek, Brakeman. <strong>PHP:</strong> PHP CodeSniffer, PHPStan, Psalm. <strong>C#:</strong> StyleCop, FxCop, SonarQube.</p></div></div></div>
+<div class="slide" data-slide="24"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">24</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Using inspection tools in IDEs</div><div class="slide-content"><p><strong>VS Code:</strong> ESLint, Pylint, SonarLint extensions — real-time feedback. <strong>PyCharm:</strong> Built-in Pylint; External Tools. <strong>IntelliJ:</strong> Checkstyle-IDEA, SonarLint. Standalone: SonarQube for CI and detailed reports.</p></div></div></div>
+<div class="slide" data-slide="25"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">25</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Identifying modification points</div><div class="slide-content"><p>Use IDE features and plugins to find where to change code: <strong>Go to Definition</strong>, <strong>Find Usages</strong>, <strong>Search in project</strong>. Assess project technologies (languages, frameworks) and choose the right editor.</p></div></div></div>
+<div class="slide" data-slide="26"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">26</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Assessing project technologies</div><div class="slide-content"><p>Before modifying: identify programming language, build system, dependencies, and project structure. Compare IDEs (Visual Studio, Eclipse, PyCharm) for your stack. Use AI tools for code inspection where appropriate.</p></div></div></div>
+<div class="slide" data-slide="27"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">27</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Comparing IDEs: VS, Eclipse, PyCharm</div><div class="slide-content"><p><strong>Visual Studio</strong> — .NET, C#, C++. <strong>Eclipse</strong> — Java, plugins. <strong>PyCharm</strong> — Python, built-in inspections. Each supports Git, linters, and refactoring. Choose by language and team preference.</p></div></div></div>
+<div class="slide" data-slide="28"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">28</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Practical example: AI tools for code inspection</div><div class="slide-content"><p>AI-assisted tools can help understand code, suggest fixes, and find modification points. Use in combination with static analysis and linters for best results.</p></div></div></div>
+<div class="slide" data-slide="29"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">29</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Unit 2: Code reading techniques</div><div class="slide-content"><p>Read code by language type. <strong>Incremental reading</strong> — one module, class, or function at a time. Use entry points and execution flow. Document findings (architecture, key questions) for future reference.</p></div></div></div>
+<div class="slide" data-slide="30"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">30</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Extracting models and diagrams</div><div class="slide-content"><p>Document structure and flow: flowcharts, sequence diagrams, class diagrams. Use UML tools to create and maintain models. Commit history and code navigation (Go to Definition, Find Usages) support understanding.</p></div></div></div>
+<div class="slide" data-slide="31"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">31</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Using UML tools</div><div class="slide-content"><p>UML diagrams (class, sequence, activity) help communicate system structure and behavior. Tools integrate with IDEs. Document logical arrangement before modification using flowcharts.</p></div></div></div>
+<div class="slide" data-slide="32"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">32</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Case study: Navigating a legacy codebase</div><div class="slide-content"><p>Legacy financial (or other) apps: use code reading, models, commit history, and documentation of findings. Identify entry points and execution flow before modifying.</p></div></div></div>
+<div class="slide" data-slide="33"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">33</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Unit 3: Writing meaningful comments</div><div class="slide-content"><p>Comments clarify purpose and complex logic. Write according to flowcharts. Maintain updated project documentation. Avoid redundant or misleading comments.</p></div></div></div>
+<div class="slide" data-slide="34"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">34</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Importance of maintaining documentation</div><div class="slide-content"><p>Keep README, wiki, and inline docs in sync with code. Document modification of software modules internally. Complications in code writing (e.g. technical debt) should be addressed and documented.</p></div></div></div>
+<div class="slide" data-slide="35"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">35</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Implementing code modifications</div><div class="slide-content"><p>Determine type, place, and manner of modification. Add or modify code according to requirements. Document changes. Execute according to implementation instructions. Refactor incrementally without changing behavior.</p></div></div></div>
+<div class="slide" data-slide="36"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">36</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Practical and collaborative modification exercises</div><div class="slide-content"><p>Practice modifications in a version-controlled workflow. Use branches and PRs. Collaborate with peers on code review. Combine modifications and re-test.</p></div></div></div>
+<div class="slide" data-slide="37"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">37</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Unit 4: Debugging techniques</div><div class="slide-content"><p>Reproduce issues; use breakpoints, step-through, and variable inspection. Fix errors. Practical debugging sessions: isolate cause, fix, verify. Address programming errors found during testing.</p></div></div></div>
+<div class="slide" data-slide="38"><div class="slide-header"><div class="logo-badge"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><span class="logo-text">Coach Academy</span></div><div class="header-line"></div><div class="nav-badge"><span class="arrow" onclick="prevSlide()">&#10094;</span><span class="page-num">38</span><span class="arrow" onclick="nextSlide()">&#10095;</span></div></div><div class="slide-body"><div class="slide-title">Testing modified code and writing tests</div><div class="slide-content"><p>Review the test plan; ensure the modification meets specifications. Test the code according to the change. Write and run tests (unit, integration as needed). Combine modifications and re-test. Manage pull requests (procedures for creating and managing PRs).</p></div></div></div>
+
+<!-- SLIDE 8: Unit 1 - Inspection (now slide 39) -->
+<div class="slide" data-slide="39">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">8</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Unit 1: Project inspection and preparation</div>
+        <div class="slide-content">
+            <p><strong>Choosing inspection tools</strong></p>
+            <ul>
+                <li><strong>Static code analysis</strong> — Find complexity, dependencies, potential bugs without running the code.</li>
+                <li><strong>Linters</strong> — Enforce style and catch common mistakes (e.g. ESLint, Pylint).</li>
+            </ul>
+            <p><strong>Identifying modification points</strong></p>
+            <ul>
+                <li>Use IDE features and plugins to locate where to change code.</li>
+                <li>Assess project technologies; compare IDEs (Visual Studio, Eclipse, PyCharm) and use AI-assisted inspection where appropriate.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 9: Unit 2 - Code analysis -->
+<div class="slide" data-slide="9">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">9</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Unit 2: Code analysis and understanding</div>
+        <div class="slide-content">
+            <ul>
+                <li><strong>Code reading techniques</strong> — Read code by language; use incremental reading (one module/class/function at a time).</li>
+                <li><strong>Extracting models and diagrams</strong> — Document structure and flow.</li>
+                <li><strong>UML tools</strong> — Create and use models to understand the codebase.</li>
+                <li><strong>Entry points and execution flow</strong> — Identify where execution begins and trace the flow.</li>
+            </ul>
+            <div class="fun-box">Document findings (architecture, key questions) for future reference and safe modification.</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 10: Unit 3 - Modifying code -->
+<div class="slide" data-slide="10">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">10</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Unit 3: Modifying code and documentation</div>
+        <div class="slide-content">
+            <ul>
+                <li><strong>Writing meaningful comments</strong> — Clarify purpose and complex logic.</li>
+                <li><strong>Keeping documentation updated</strong> — Align docs with code changes.</li>
+                <li><strong>Implementing modifications</strong> — Determine type, place, and manner; add or modify code; document internally.</li>
+                <li><strong>Practical and collaborative exercises</strong> — Practice modifications in a safe, version-controlled workflow.</li>
+            </ul>
+            <div class="fun-box">Refactoring improves structure and readability without changing behavior; do it incrementally.</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 11: Q&A Time! (matches image template) -->
+<div class="slide" data-slide="11">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">11</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body centered">
+        <div class="emoji-lg">❓</div>
+        <div class="slide-title">Q&A Time!</div>
+        <div class="time-row">
+            <span class="emoji">⏰</span>
+            <span>Time: 15 minutes</span>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 12: Unit 4 - Debugging -->
+<div class="slide" data-slide="12">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">12</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Unit 4: Debugging and testing modifications</div>
+        <div class="slide-content">
+            <ul>
+                <li><strong>Debugging techniques</strong> — Reproduce issues, use breakpoints, inspect variables, fix errors.</li>
+                <li><strong>Testing modified code</strong> — Review the test plan; run tests that cover your changes.</li>
+                <li><strong>Writing and running tests</strong> — Add or update tests as needed after modification.</li>
+                <li><strong>Combining modifications</strong> — Integrate changes with the rest of the codebase and re-test.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 13: Pull requests -->
+<div class="slide" data-slide="13">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">13</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Managing pull requests</div>
+        <div class="slide-content">
+            <p>Procedures for creating and managing pull requests:</p>
+            <ul>
+                <li>Create a branch for your modification; make commits with clear messages.</li>
+                <li>Push the branch and open a pull request with a title and description.</li>
+                <li>Respond to review comments; update code if requested.</li>
+                <li>After approval, merge (or squash) into the target branch.</li>
+            </ul>
+            <div class="fun-box">Linking PRs to issues (e.g. "Fixes #123") keeps traceability and closes issues automatically when merged.</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 14: Summary -->
+<div class="slide" data-slide="14">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">14</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body">
+        <div class="slide-title">Summary</div>
+        <div class="slide-content">
+            <p>Code modification (ECU-SD-04-06) covers:</p>
+            <ul>
+                <li>Specifying language and tools, selecting modules to modify</li>
+                <li>Understanding code with flowcharts and comments</li>
+                <li>Implementing and documenting modifications</li>
+                <li>Testing and debugging; managing changes via pull requests</li>
+            </ul>
+            <p>Source: <strong>Book ECU-SD-04-06</strong> — USAID Workforce Egypt / IATS, Grade Three Software Development.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 15: Thank you -->
+<div class="slide" data-slide="15">
+    <div class="slide-header">
+        <div class="logo-badge">
+            <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <span class="logo-text">Coach Academy</span>
+        </div>
+        <div class="header-line"></div>
+        <div class="nav-badge">
+            <span class="arrow" onclick="prevSlide()">&#10094;</span>
+            <span class="page-num">15</span>
+            <span class="arrow" onclick="nextSlide()">&#10095;</span>
+        </div>
+    </div>
+    <div class="slide-body centered">
+        <div class="emoji-lg">🙏</div>
+        <div class="slide-title">Thank you</div>
+        <p class="slide-content">Course: <strong>ECU-SD-04-06 — Code Modification</strong><br>USAID Workforce Egypt / IATS</p>
+        <p class="slide-content" style="margin-top:20px; font-size:14px; color:#666;">To save as PDF: Ctrl+P → Save as PDF</p>
+    </div>
+</div>
+
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+
+    // Add footer to every slide
+    const footerHtml = '<div class="slide-footer">| <a href="https://www.coach-academy.com" target="_blank">www.coach-academy.com</a> |</div>';
+    slides.forEach(function(slide) {
+        if (!slide.querySelector('.slide-footer')) {
+            slide.insertAdjacentHTML('beforeend', footerHtml);
+        }
+    });
+
+    function showSlide(n) {
+        const idx = ((n - 1) % total + total) % total;
+        slides.forEach((s, i) => {
+            s.classList.toggle('active', i === idx);
+            const num = s.querySelector('.page-num');
+            if (num) num.textContent = i + 1;
+        });
+    }
+
+    let current = 1;
+    function nextSlide() { current = current >= total ? 1 : current + 1; showSlide(current); }
+    function prevSlide() { current = current <= 1 ? total : current - 1; showSlide(current); }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    });
+
+    showSlide(1);
+</script>
+</body>
+</html>
